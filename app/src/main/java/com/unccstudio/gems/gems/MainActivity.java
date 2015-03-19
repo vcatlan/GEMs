@@ -1,7 +1,10 @@
 package com.unccstudio.gems.gems;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -27,7 +31,7 @@ public class MainActivity extends ActionBarActivity implements MyFridgeFragment.
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private Toolbar mToolbar;
+    private static final int REQUEST_ENABLE_BT = 1001;
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
@@ -80,6 +84,47 @@ public class MainActivity extends ActionBarActivity implements MyFridgeFragment.
             selectItem(1);
         }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // If Bluetooth is not enabled, let user enable it.
+        if (!isBluetoothEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        } else {
+            //connectToService();
+        }
+    }
+
+    private boolean isBluetoothEnabled() {
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            Toast.makeText(this, "Bluetooth not supported", Toast.LENGTH_LONG).show();
+            getSupportActionBar().setSubtitle("Bluetooth not supported");
+            return false;
+        } else {
+            if (!mBluetoothAdapter.isEnabled()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_ENABLE_BT) {
+            if (resultCode == Activity.RESULT_OK) {
+                //connectToService();
+            } else {
+                Toast.makeText(this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
+                getSupportActionBar().setSubtitle("Bluetooth not enabled");
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /* The click listner for ListView in the navigation drawer */
