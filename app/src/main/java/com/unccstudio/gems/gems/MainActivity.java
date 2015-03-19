@@ -114,6 +114,7 @@ public class MainActivity extends ActionBarActivity implements MyFridgeFragment.
         return true;
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_ENABLE_BT) {
