@@ -88,8 +88,6 @@ public class MainActivity extends ActionBarActivity implements MyFridgeFragment.
 
     @Override
     protected void onStart() {
-        super.onStart();
-
         // If Bluetooth is not enabled, let user enable it.
         if (!isBluetoothEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -97,6 +95,8 @@ public class MainActivity extends ActionBarActivity implements MyFridgeFragment.
         } else {
             //connectToService();
         }
+
+        super.onStart();
     }
 
     private boolean isBluetoothEnabled() {

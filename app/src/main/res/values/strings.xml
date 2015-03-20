@@ -4,6 +4,7 @@
     <string name="app_name">GEMs</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_logout">Logout</string>
+    <string name="title_activity_arduino">Arduino</string>
 
     <string-array name="menu_array">
         <item>Welcome</item>
@@ -18,5 +19,9 @@
     <string name="redButtonText">Red</string>
     <string name="yellowButtonText">Yellow</string>
     <string name="greenButtonText">Green</string>
+    <string name="lightLabel">Light</string>
+    <string name="motionLabel">Motion</string>
+    <string name="buttonLabel">Button</string>
+    <string name="statusLabel">Status</string>
 
 </resources>

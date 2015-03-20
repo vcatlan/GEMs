@@ -12,82 +12,142 @@
         android:id="@+id/redTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:background="#ffff0000"
         android:text="@string/redButtonText"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <ToggleButton
-        android:id="@+id/redToggleButton"
-        android:layout_width="match_parent"
+        android:id="@+id/yellowToggleButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/redTextView"
-        android:layout_centerHorizontal="true" />
+        android:checked="false" />
 
     <TextView
         android:id="@+id/yellowTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/redToggleButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
         android:background="#ffffff00"
         android:text="@string/yellowButtonText"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_above="@+id/yellowToggleButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ToggleButton
-        android:id="@+id/yellowToggleButton"
-        android:layout_width="match_parent"
+        android:id="@+id/redToggleButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/yellowTextView"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:id="@+id/greenTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/yellowToggleButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:background="#ff00ff00"
-        android:text="@string/greenButtonText"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
     <ToggleButton
         android:id="@+id/greenToggleButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/greenTextView"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/greenButtonText"
+        android:id="@+id/greenTextView"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/greenToggleButton"
+        android:layout_alignStart="@+id/greenToggleButton"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+        android:background="#ff15ff2e" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lightImageButton"
+        android:layout_below="@+id/lightTextView"
+        android:layout_alignRight="@+id/redToggleButton"
+        android:layout_alignEnd="@+id/redToggleButton"
+        android:layout_alignLeft="@+id/redToggleButton"
+        android:layout_alignStart="@+id/redToggleButton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/lightLabel"
+        android:id="@+id/lightTextView"
+        android:linksClickable="false"
+        android:layout_below="@+id/redToggleButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/motionLabel"
+        android:id="@+id/motionTextView"
+        android:layout_above="@+id/motionImageButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/motionImageButton"
+        android:layout_alignTop="@+id/lightImageButton"
+        android:layout_alignRight="@+id/yellowToggleButton"
+        android:layout_alignEnd="@+id/yellowToggleButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/buttonLabel"
+        android:id="@+id/buttonTextView"
+        android:layout_above="@+id/buttonImageButton"
+        android:layout_alignRight="@+id/greenTextView"
+        android:layout_alignEnd="@+id/greenTextView" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonImageButton"
+        android:layout_alignTop="@+id/lightImageButton"
+        android:layout_alignRight="@+id/statusButton"
+        android:layout_alignEnd="@+id/statusButton"
+        android:layout_alignLeft="@+id/greenToggleButton"
+        android:layout_alignStart="@+id/greenToggleButton" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Status"
-        android:id="@+id/statusbutton"
-        android:layout_below="@+id/greenToggleButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="wrap_content"
+        android:text="@string/statusLabel"
+        android:id="@+id/statusButton"
+        android:layout_below="@+id/lightImageButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scrollView"
-        android:layout_below="@+id/statusbutton"
+        android:layout_below="@+id/statusButton"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true" >
 
         <TextView
-            android:id="@+id/msgJonduino"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:text=""
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_alignTop="@+id/scrollView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:id="@+id/statusTextView" />
     </ScrollView>
 
 </RelativeLayout>

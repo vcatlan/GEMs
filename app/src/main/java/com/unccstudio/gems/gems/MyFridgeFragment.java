@@ -13,6 +13,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import java.util.Set;
 public class MyFridgeFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
+    public static final String BT_DEVICE_MAC = "bt_device_mac";
     private List<String> items;
     private ArrayAdapter<String> adapter;
     private BluetoothAdapter mBlueAdapter = null;
@@ -91,21 +93,31 @@ public class MyFridgeFragment extends Fragment {
             for (BluetoothDevice device : pairedDevices) {
                 // Add the name and address to an array adapter to show in a ListView
                 if(device.getName().equals("HC-06")) {
-                    items.add(device.getName() + "\n" + device.getAddress());
+                    items.add(device.getAddress());
                 }
             }
         }
 
-        items.add("Available devices...");
+//        items.add("Available devices...");
 
         adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, items);
         ListView listView = (ListView) rootView.findViewById(R.id.myFridgeListView);
         listView.setAdapter(adapter);
         adapter.setNotifyOnChange(true);
 
-        // Register the BroadcastReceiver
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        getActivity().registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), ArduinoActivity.class);
+                intent.putExtra(BT_DEVICE_MAC, items.get(position));
+                startActivity(intent);
+                Toast.makeText(getActivity(), items.get(position), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//        // Register the BroadcastReceiver
+//        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+//        getActivity().registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
 
         return rootView;
     }
@@ -113,13 +125,13 @@ public class MyFridgeFragment extends Fragment {
     @Override
     public void onStart() {
         //start searching for bt devices
-        if (mBlueAdapter.isDiscovering()) {
-            mBlueAdapter.cancelDiscovery();
-            Toast.makeText(getActivity(), "Discovery canceled...", Toast.LENGTH_SHORT).show();
-        }
-
-        Toast.makeText(getActivity(), "Starting discovery...", Toast.LENGTH_SHORT).show();
-        mBlueAdapter.startDiscovery();
+//        if (mBlueAdapter.isDiscovering()) {
+//            mBlueAdapter.cancelDiscovery();
+//            Toast.makeText(getActivity(), "Discovery canceled...", Toast.LENGTH_SHORT).show();
+//        }
+//
+//        Toast.makeText(getActivity(), "Starting discovery...", Toast.LENGTH_SHORT).show();
+//        mBlueAdapter.startDiscovery();
 
         super.onStart();
     }
@@ -171,7 +183,7 @@ public class MyFridgeFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-        getActivity().unregisterReceiver(mReceiver);
+//        getActivity().unregisterReceiver(mReceiver);
     }
 
     /**

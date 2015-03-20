@@ -8,8 +8,6 @@ import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,7 +25,7 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
     private static final String TAG = "Jon";
     private static final UUID MY_UUID = UUID
             .fromString("00001101-0000-1000-8000-00805F9B34FB");
-    private static String address = "00:14:01:23:17:03";
+    private static String address = "";
     Button Status;
     ToggleButton red, yellow, green;
     TextView Result;
@@ -48,6 +46,7 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arduino);
 
+        address = getIntent().getStringExtra(MyFridgeFragment.BT_DEVICE_MAC);
         //display logo in the action bar
         ab = getSupportActionBar();
         ab.setDisplayUseLogoEnabled(true);
@@ -59,8 +58,12 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
         red = (ToggleButton) findViewById(R.id.redToggleButton);
         yellow = (ToggleButton) findViewById(R.id.yellowToggleButton);
         green = (ToggleButton) findViewById(R.id.greenToggleButton);
-        Result = (TextView) findViewById(R.id.msgJonduino);
-        Status = (Button) findViewById(R.id.statusbutton);
+        Result = (TextView) findViewById(R.id.statusTextView);
+        Status = (Button) findViewById(R.id.statusButton);
+
+        findViewById(R.id.motionImageButton).setBackgroundColor(getResources().getColor(R.color.orange));
+        findViewById(R.id.lightImageButton).setBackgroundColor(getResources().getColor(R.color.darkpurple));
+        findViewById(R.id.buttonImageButton).setBackgroundColor(getResources().getColor(R.color.blue));
 
         //Connect.setOnClickListener(this);
         red.setOnClickListener(this);
@@ -86,12 +89,12 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
     public void onClick(View control) {
 
         switch (control.getId()) {
-            case R.id.statusbutton:
+            case R.id.statusButton:
                 dataToSend = "CMD STATUS";
                 dataToSend += "\n";
                 writeData(dataToSend);
                 break;
-            case R.id.redToggleButton:
+            case R.id.yellowToggleButton:
                 if (red.isChecked()) {
                     dataToSend = "CMD RED=ON";
                     dataToSend += "\n";
@@ -102,7 +105,7 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
                     writeData(dataToSend);
                 }
                 break;
-            case R.id.yellowToggleButton:
+            case R.id.redToggleButton:
                 if (yellow.isChecked()) {
                     dataToSend = "CMD YELLOW=ON";
                     dataToSend += "\n";
