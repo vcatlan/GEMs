@@ -1,20 +1,62 @@
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- The main content view -->
-    <FrameLayout
-        android:id="@+id/content_frame"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="#ff30ffb3">
+
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <!-- The navigation drawer -->
-    <ListView android:id="@+id/list_view_drawer"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#111"/>
-</android.support.v4.widget.DrawerLayout>
+        android:layout_height="wrap_content"
+        android:text="@string/myfridgeButtonlabel"
+        android:id="@+id/myFridgeButton"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tipsButtonLabel"
+        android:id="@+id/tipsButton"
+        android:layout_below="@+id/myFridgeButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/gameButtonLabel"
+        android:id="@+id/gameButton"
+        android:layout_below="@+id/tipsButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/gameButton"
+        android:layout_alignLeft="@+id/gameButton"
+        android:layout_alignStart="@+id/gameButton"
+        android:layout_marginTop="50dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/settingsButtonLabel"
+            android:id="@+id/settingsButton"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/demoButtonLabel"
+            android:id="@+id/demoButton"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</RelativeLayout>
