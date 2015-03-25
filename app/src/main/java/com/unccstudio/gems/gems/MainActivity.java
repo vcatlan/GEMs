@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
+
+import com.facebook.FacebookSdk;
+import com.facebook.login.widget.LoginButton;
+import java.util.Arrays;
+
 
 public class MainActivity extends ActionBarActivity {
     private static final int REQUEST_ENABLE_BT = 1001;
@@ -21,6 +24,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         myFridge = (Button) findViewById(R.id.myFridgeButton);
         tips = (Button) findViewById(R.id.tipsButton);
@@ -35,6 +40,11 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+
+
+        LoginButton button = (LoginButton) findViewById(R.id.login_button);
+        button.setReadPermissions(Arrays.asList("basic_info", "email"));
     }
 
     @Override
