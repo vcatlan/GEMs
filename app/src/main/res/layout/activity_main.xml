@@ -113,6 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignRight="@+id/userEmailTextView"
+        android:layout_alignEnd="@+id/userEmailTextView" />
 
 </RelativeLayout>

@@ -11,21 +11,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import java.util.Arrays;
-
 
 public class MainActivity extends ActionBarActivity {
     private static final int REQUEST_ENABLE_BT = 1001;
     private Button myFridge, tips, game, settings, demo;
+    private String TAG = "MainActivity";
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
 
         myFridge = (Button) findViewById(R.id.myFridgeButton);
         tips = (Button) findViewById(R.id.tipsButton);
@@ -41,10 +44,8 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
-
-        LoginButton button = (LoginButton) findViewById(R.id.login_button);
-        button.setReadPermissions(Arrays.asList("basic_info", "email"));
     }
 
     @Override
@@ -78,6 +79,8 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == REQUEST_ENABLE_BT) {
             if (resultCode == Activity.RESULT_OK) {
                 //connectToService();
@@ -86,7 +89,9 @@ public class MainActivity extends ActionBarActivity {
                 getSupportActionBar().setSubtitle("Bluetooth not enabled");
             }
         }
-        super.onActivityResult(requestCode, resultCode, data);
+
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+
     }
 
     @Override
