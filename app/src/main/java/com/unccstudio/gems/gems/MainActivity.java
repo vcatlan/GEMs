@@ -43,9 +43,6 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
-
     }
 
     @Override
@@ -89,9 +86,6 @@ public class MainActivity extends ActionBarActivity {
                 getSupportActionBar().setSubtitle("Bluetooth not enabled");
             }
         }
-
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-
     }
 
     @Override
