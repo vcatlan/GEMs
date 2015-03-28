@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
@@ -106,5 +105,26 @@
         android:layout_toEndOf="@+id/imageView"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voice"
+        android:id="@+id/voiceButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/voiceTextView"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/voiceButton"
+        android:layout_alignBottom="@+id/voiceButton"
+        android:layout_alignRight="@+id/myFridgeButton"
+        android:layout_alignEnd="@+id/myFridgeButton" />
 
 </RelativeLayout>

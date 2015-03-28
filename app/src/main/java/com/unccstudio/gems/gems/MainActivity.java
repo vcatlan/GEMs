@@ -2,28 +2,28 @@ package com.unccstudio.gems.gems;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
     private static final int REQUEST_ENABLE_BT = 1001;
+    private static final int SPEECH_REQUEST_CODE = 2001;
     private Button myFridge, tips, game, settings, demo;
     private String TAG = "MainActivity";
-    private LoginButton loginButton;
-    private CallbackManager callbackManager;
+    private TextView voiceText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,26 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MyFridgeActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        voiceText = (TextView) findViewById(R.id.voiceTextView);
+
+        findViewById(R.id.voiceButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
+
+                try {
+                    startActivityForResult(intent, SPEECH_REQUEST_CODE);
+                } catch (ActivityNotFoundException a) {
+                    Toast t = Toast.makeText(getApplicationContext(),
+                            "Opps! Your device doesn't support Speech to Text",
+                            Toast.LENGTH_SHORT);
+                    t.show();
+                }
             }
         });
     }
@@ -86,6 +106,15 @@ public class MainActivity extends ActionBarActivity {
                 getSupportActionBar().setSubtitle("Bluetooth not enabled");
             }
         }
+        else if (requestCode == SPEECH_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                ArrayList<String> text = data
+                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+                voiceText.setText(text.get(0));
+            }
+        }
+
     }
 
     @Override

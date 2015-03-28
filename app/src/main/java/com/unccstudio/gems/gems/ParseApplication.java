@@ -3,7 +3,6 @@ package com.unccstudio.gems.gems;
 import android.app.Application;
 
 import com.parse.Parse;
-import com.parse.ParseObject;
 
 /**
  * Created by Administrator on 3/25/2015.
