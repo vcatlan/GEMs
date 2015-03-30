@@ -3,9 +3,13 @@ package com.unccstudio.gems.gems;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,7 +52,10 @@ public class MyFridgeActivity extends ActionBarActivity {
             // Loop through paired devices
             for (BluetoothDevice device : pairedDevices) {
                 // Add the name and address to an array adapter to show in a ListView
-                if(device.getName().equals("HC-06")) {
+                String[] separated = device.getName().split(",");
+                Log.d("demo", separated[0]);
+
+                if (separated[0].equals("HC-06")) {
                     GEM item = new GEM();
 
                     item.setMacAddress(device.getAddress());
@@ -61,6 +68,8 @@ public class MyFridgeActivity extends ActionBarActivity {
 
         adapter = new MyFridgeDisplayItemAdapter(this, R.layout.display_myfridgeitem_layout, items);
         itemListView.setAdapter(adapter);
+        adapter.setNotifyOnChange(true);
+
         itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -70,7 +79,50 @@ public class MyFridgeActivity extends ActionBarActivity {
             }
         });
 
-        adapter.setNotifyOnChange(true);
+        // Register the BroadcastReceiver
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
+    }
+
+    // Create a BroadcastReceiver for ACTION_FOUND
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            // When discovery finds a device
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                // Get the BluetoothDevice object from the Intent
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                // Add the name and address to an array adapter to show in a ListView
+                if(device.getName() != null) {
+
+                    String[] separated = device.getName().split(",");
+                    Log.d("demo", separated[0]);
+
+                    if (separated[0].equals("HC-06")) {
+                        GEM item = new GEM();
+
+                        item.setMacAddress(device.getAddress());
+                        item.setName(device.getName());
+
+                        items.add(item);
+                        adapter.setNotifyOnChange(true);
+                    }
+                }
+            }
+        }
+    };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        //start searching for bt devices
+        if (mBlueAdapter.isDiscovering()) {
+            mBlueAdapter.cancelDiscovery();
+        }
+
+        Toast.makeText(this, "Starting discovery...", Toast.LENGTH_SHORT).show();
+        mBlueAdapter.startDiscovery();
     }
 
     @Override
@@ -119,6 +171,23 @@ public class MyFridgeActivity extends ActionBarActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
+        //start searching for bt devices
+        if (mBlueAdapter.isDiscovering()) {
+            mBlueAdapter.cancelDiscovery();
+        }
+
         finish();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        //start searching for bt devices
+        if (mBlueAdapter.isDiscovering()) {
+            mBlueAdapter.cancelDiscovery();
+        }
+
+        unregisterReceiver(mReceiver);
     }
 }
