@@ -13,9 +13,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import com.parse.ParseObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +31,7 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
     private static final String TAG = "Jon";
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static String address = "";
-    private Button Status;
+    private Button Status, Start;
     private ToggleButton red, yellow, green;
     private TextView Result;
     private Handler handler;
@@ -42,6 +45,9 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
     private OutputStream outStream = null;
     private InputStream inStream = null;
     private ProgressDialog pd;
+    private EditText editTextStart;
+    private int delay = 1000; //milliseconds
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +62,19 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
         green = (ToggleButton) findViewById(R.id.greenToggleButton);
         Result = (TextView) findViewById(R.id.statusTextView);
         Status = (Button) findViewById(R.id.statusButton);
+        Start = (Button) findViewById(R.id.buttonStart);
+        editTextStart = (EditText) findViewById(R.id.editTextStartText);
 
-        findViewById(R.id.motionImageButton).setBackgroundColor(getResources().getColor(R.color.orange));
-        findViewById(R.id.lightImageButton).setBackgroundColor(getResources().getColor(R.color.darkpurple));
-        findViewById(R.id.buttonImageButton).setBackgroundColor(getResources().getColor(R.color.blue));
+//        findViewById(R.id.motionImageButton).setBackgroundColor(getResources().getColor(R.color.orange));
+//        findViewById(R.id.lightImageButton).setBackgroundColor(getResources().getColor(R.color.darkpurple));
+//        findViewById(R.id.buttonImageButton).setBackgroundColor(getResources().getColor(R.color.blue));
+
 
         red.setOnClickListener(this);
         yellow.setOnClickListener(this);
         green.setOnClickListener(this);
         Status.setOnClickListener(this);
+        Start.setOnClickListener(this);
 
         new ConnectBtItem().execute();
     }
@@ -88,14 +98,40 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
         finish();
     }
 
+    public void startCounter(String message){
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                //do something
+                dataToSend = "CMD STATUS";
+                dataToSend += "\n";
+                Result.setText("");
+                writeData(dataToSend);
+
+                handler.postDelayed(this, delay);
+            }
+        }, delay);
+    }
+
     @Override
     public void onClick(View control) {
 
         switch (control.getId()) {
+            case R.id.buttonStart:
+                if(editTextStart.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),
+                            "Type something James..!", Toast.LENGTH_SHORT)
+                            .show();
+                }
+                else {
+                    startCounter(editTextStart.getText().toString());
+                }
+                break;
             case R.id.statusButton:
-                dataToSend = "CMD STATUS";
+                /*dataToSend = "CMD STATUS";
                 dataToSend += "\n";
-                writeData(dataToSend);
+                Result.setText("");
+                writeData(dataToSend);*/
+                handler.removeCallbacksAndMessages(null);
                 break;
             case R.id.redToggleButton:
                 if (red.isChecked()) {
@@ -240,12 +276,12 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
                                     handler.post(new Runnable() {
                                         public void run() {
 
-//                                        if (Result.getText().toString().equals("..")) {
-//                                            Result.setText(data);
-//                                        } else {
-//                                            Result.append("\n" + data);
-//                                        }
-                                        Result.append(data + "\n");
+                                            String[] separated = data.split(",");
+                                            if (separated[0].equals("SENSORDATA")) {
+                                                saveData(editTextStart.getText().toString(), separated[1], separated[2], separated[3]);
+                                            }
+
+                                            Result.append(data + "\n");
                                         }
                                     });
                                 } else {
@@ -261,6 +297,15 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
         });
 
         workerThread.start();
+    }
+
+    public void saveData(String msg, String light, String temp, String vibration){
+        ParseObject gameScore = new ParseObject("GEMDATA");
+        gameScore.put("message", msg);
+        gameScore.put("lightData", light);
+        gameScore.put("tempData", temp);
+        gameScore.put("vibrationData", vibration);
+        gameScore.saveInBackground();
     }
 
     private class ConnectBtItem extends AsyncTask<Void, Void, Void> {

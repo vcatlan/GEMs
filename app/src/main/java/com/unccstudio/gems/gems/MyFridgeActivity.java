@@ -52,14 +52,11 @@ public class MyFridgeActivity extends ActionBarActivity {
             // Loop through paired devices
             for (BluetoothDevice device : pairedDevices) {
                 // Add the name and address to an array adapter to show in a ListView
-                String[] separated = device.getName().split(",");
-                Log.d("demo", separated[0]);
-
-                if (separated[0].equals("HC-06")) {
+                if (device.getName().equals("HC-06")) {
                     GEM item = new GEM();
 
                     item.setMacAddress(device.getAddress());
-                    item.setName(device.getName());
+                    item.setName(device.getName() + " -> paired");
 
                     items.add(item);
                 }
@@ -94,18 +91,14 @@ public class MyFridgeActivity extends ActionBarActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // Add the name and address to an array adapter to show in a ListView
                 if(device.getName() != null) {
-
-                    String[] separated = device.getName().split(",");
-                    Log.d("demo", separated[0]);
-
-                    if (separated[0].equals("HC-06")) {
+                    if (device.getName().equals("HC-06")) {
                         GEM item = new GEM();
 
                         item.setMacAddress(device.getAddress());
-                        item.setName(device.getName());
+                        item.setName(device.getName() + " -> unpaired");
 
                         items.add(item);
-                        adapter.setNotifyOnChange(true);
+                        adapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -119,6 +112,7 @@ public class MyFridgeActivity extends ActionBarActivity {
         //start searching for bt devices
         if (mBlueAdapter.isDiscovering()) {
             mBlueAdapter.cancelDiscovery();
+            items = new ArrayList<>();
         }
 
         Toast.makeText(this, "Starting discovery...", Toast.LENGTH_SHORT).show();
@@ -174,6 +168,7 @@ public class MyFridgeActivity extends ActionBarActivity {
         //start searching for bt devices
         if (mBlueAdapter.isDiscovering()) {
             mBlueAdapter.cancelDiscovery();
+            items = new ArrayList<>();
         }
 
         finish();
