@@ -31,9 +31,6 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
     private static final String TAG = "Jon";
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static String address = "";
-    private Button Status, Start;
-    private ToggleButton red, yellow, green;
-    private TextView Result;
     private Handler handler;
     private byte delimiter = 10;
     private boolean stopWorker = false;
@@ -45,36 +42,37 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
     private OutputStream outStream = null;
     private InputStream inStream = null;
     private ProgressDialog pd;
-    private EditText editTextStart;
-    private int delay = 1000; //milliseconds
-
+    private EditText textname, shelfTime, shelfTimeType, note, quantity;
+    private Button save;
+    private ToggleButton light;
+    private GEM item;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arduino);
 
-        address = getIntent().getStringExtra(MyFridgeActivity.BT_DEVICE_MAC);
+        position = getIntent().getIntExtra(MyFridgeActivity.GEM_ITEM_POSITION, 0);
+        item = (GEM) getIntent().getSerializableExtra(MyFridgeActivity.GEM_ITEM);
+        address = item.getMacAddress();
         handler = new Handler();
 
-        red = (ToggleButton) findViewById(R.id.redToggleButton);
-        yellow = (ToggleButton) findViewById(R.id.yellowToggleButton);
-        green = (ToggleButton) findViewById(R.id.greenToggleButton);
-        Result = (TextView) findViewById(R.id.statusTextView);
-        Status = (Button) findViewById(R.id.statusButton);
-        Start = (Button) findViewById(R.id.buttonStart);
-        editTextStart = (EditText) findViewById(R.id.editTextStartText);
+        save = (Button) findViewById(R.id.buttonSave);
+        textname = (EditText) findViewById(R.id.editTextName);
+        shelfTime = (EditText) findViewById(R.id.editTextShelfTime);
+        shelfTimeType = (EditText) findViewById(R.id.editTextShelfTimeType);
+        note = (EditText) findViewById(R.id.editTextNote);
+        quantity = (EditText) findViewById(R.id.editTextQuantity);
+        light = (ToggleButton) findViewById(R.id.toggleLightButton);
 
-//        findViewById(R.id.motionImageButton).setBackgroundColor(getResources().getColor(R.color.orange));
-//        findViewById(R.id.lightImageButton).setBackgroundColor(getResources().getColor(R.color.darkpurple));
-//        findViewById(R.id.buttonImageButton).setBackgroundColor(getResources().getColor(R.color.blue));
+        textname.setText(item.getName());
+        shelfTime.setText(Integer.toString(item.getShelfLife()));
+        shelfTimeType.setText(item.getShelfLifeType());
+        quantity.setText(Integer.toString(item.getQuantity()));
 
-
-        red.setOnClickListener(this);
-        yellow.setOnClickListener(this);
-        green.setOnClickListener(this);
-        Status.setOnClickListener(this);
-        Start.setOnClickListener(this);
+        light.setOnClickListener(this);
+        save.setOnClickListener(this);
 
         new ConnectBtItem().execute();
     }
@@ -98,73 +96,32 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
         finish();
     }
 
-    public void startCounter(String message){
-        handler.postDelayed(new Runnable(){
-            public void run(){
-                //do something
-                dataToSend = "CMD STATUS";
-                dataToSend += "\n";
-                Result.setText("");
-                writeData(dataToSend);
-
-                handler.postDelayed(this, delay);
-            }
-        }, delay);
-    }
-
     @Override
     public void onClick(View control) {
-
         switch (control.getId()) {
-            case R.id.buttonStart:
-                if(editTextStart.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(),
-                            "Type something James..!", Toast.LENGTH_SHORT)
-                            .show();
-                }
-                else {
-                    startCounter(editTextStart.getText().toString());
-                }
-                break;
-            case R.id.statusButton:
-                /*dataToSend = "CMD STATUS";
-                dataToSend += "\n";
-                Result.setText("");
-                writeData(dataToSend);*/
-                handler.removeCallbacksAndMessages(null);
-                break;
-            case R.id.redToggleButton:
-                if (red.isChecked()) {
-                    dataToSend = "CMD RED=ON";
+            case R.id.toggleLightButton:
+                if (light.isChecked()) {
+                    dataToSend = "CMD LIGHT=ON";
                     dataToSend += "\n";
                     writeData(dataToSend);
-                } else if (!red.isChecked()) {
-                    dataToSend = "CMD RED=OFF";
+                } else if (!light.isChecked()) {
+                    dataToSend = "CMD LIGHT=OFF";
                     dataToSend += "\n";
                     writeData(dataToSend);
                 }
                 break;
-            case R.id.yellowToggleButton:
-                if (yellow.isChecked()) {
-                    dataToSend = "CMD YELLOW=ON";
-                    dataToSend += "\n";
-                    writeData(dataToSend);
-                } else if (!yellow.isChecked()) {
-                    dataToSend = "CMD YELLOW=OFF";
-                    dataToSend += "\n";
-                    writeData(dataToSend);
-                }
-                break;
-            case R.id.greenToggleButton:
-                if (green.isChecked()) {
-                    dataToSend = "CMD GREEN=ON";
-                    dataToSend += "\n";
-                    writeData(dataToSend);
-                } else if (!green.isChecked()) {
-                    dataToSend = "CMD GREEN=OFF";
-                    dataToSend += "\n";
-                    writeData(dataToSend);
-                }
+            case R.id.buttonSave:
+                item.setName(textname.getText().toString());
+                item.setShelfLife(Integer.parseInt(shelfTime.getText().toString()));
+                item.setShelfLifeType(shelfTimeType.getText().toString());
+                item.setQuantity(Integer.parseInt(quantity.getText().toString()));
+                item.setNote(note.getText().toString());
+
+                Intent intent = new Intent();
+                intent.putExtra(MyFridgeActivity.GEM_ITEM, item);
+                intent.putExtra(MyFridgeActivity.GEM_ITEM_POSITION, position);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
                 break;
         }
     }
@@ -276,12 +233,7 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
                                     handler.post(new Runnable() {
                                         public void run() {
 
-                                            String[] separated = data.split(",");
-                                            if (separated[0].equals("SENSORDATA")) {
-                                                saveData(editTextStart.getText().toString(), separated[1], separated[2], separated[3]);
-                                            }
-
-                                            Result.append(data + "\n");
+                                            //voice and light here
                                         }
                                     });
                                 } else {
