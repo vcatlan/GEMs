@@ -5,10 +5,12 @@ import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -23,12 +25,14 @@ import com.parse.ParseObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.UUID;
 
 
 public class ArduinoActivity extends ActionBarActivity implements View.OnClickListener {
 
     private static final String TAG = "Jon";
+    private static final int SPEECH_REQUEST_CODE = 2001;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static String address = "";
     private Handler handler;
@@ -233,7 +237,20 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
                                     handler.post(new Runnable() {
                                         public void run() {
 
-                                            //voice and light here
+                                            if(data.equals("STATUS BUTTON PRESSED=1")){
+                                                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+
+                                                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
+
+                                                try {
+                                                    startActivityForResult(intent, SPEECH_REQUEST_CODE);
+                                                } catch (ActivityNotFoundException a) {
+                                                    Toast t = Toast.makeText(getApplicationContext(),
+                                                            "Opps! Your device doesn't support Speech to Text",
+                                                            Toast.LENGTH_SHORT);
+                                                    t.show();
+                                                }
+                                            }
                                         }
                                     });
                                 } else {
@@ -249,6 +266,21 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
         });
 
         workerThread.start();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SPEECH_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                ArrayList<String> text = data
+                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+                textname.setText(text.get(0));
+            }
+        }
+
     }
 
     public void saveData(String msg, String light, String temp, String vibration){
