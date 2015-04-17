@@ -105,7 +105,7 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
         switch (control.getId()) {
             case R.id.toggleLightButton:
                 if (light.isChecked()) {
-                    dataToSend = "CMD LIGHT=ON";
+                    dataToSend = "CMD LIGHT";
                     dataToSend += "\n";
                     writeData(dataToSend);
                 } else if (!light.isChecked()) {
@@ -236,8 +236,7 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
                                     readBufferPosition = 0;
                                     handler.post(new Runnable() {
                                         public void run() {
-
-                                            if(data.equals("STATUS BUTTON PRESSED=1")){
+                                            if(data.equals("BTN=0\r")){
                                                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
                                                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");

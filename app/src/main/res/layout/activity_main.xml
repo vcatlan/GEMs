@@ -59,15 +59,13 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:id="@+id/imageView"
+        android:src="@mipmap/logo3"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="20dp"
-        android:src="@android:drawable/btn_star_big_on" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -104,26 +102,5 @@
         android:layout_toEndOf="@+id/imageView"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Voice"
-        android:id="@+id/voiceButton"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/voiceTextView"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/voiceButton"
-        android:layout_alignBottom="@+id/voiceButton"
-        android:layout_alignRight="@+id/myFridgeButton"
-        android:layout_alignEnd="@+id/myFridgeButton" />
 
 </RelativeLayout>

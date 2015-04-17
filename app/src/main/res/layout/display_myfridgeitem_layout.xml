@@ -8,7 +8,7 @@
         android:layout_width="50dp"
         android:layout_height="52dp"
         android:id="@+id/itemColorImageView"
-        android:src="@android:drawable/ic_menu_info_details"
+        android:src="@mipmap/logo3"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
