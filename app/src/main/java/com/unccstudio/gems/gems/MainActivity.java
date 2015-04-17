@@ -44,9 +44,9 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        voiceText = (TextView) findViewById(R.id.voiceTextView);
-
-        findViewById(R.id.voiceButton).setOnClickListener(new View.OnClickListener() {
+//        voiceText = (TextView) findViewById(R.id.voiceTextView);
+//
+        findViewById(R.id.settingsButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
