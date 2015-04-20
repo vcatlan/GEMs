@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -34,11 +35,18 @@ public class MyFridgeActivity extends ActionBarActivity {
     private ListView itemListView;
     private String[] itemNames = new String[3];
     private int counter;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_fridge);
+
+        actionBar = getSupportActionBar();
+        actionBar.setLogo(R.mipmap.logo);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(true);
 
         counter = 0;
         itemNames[0] = "Milk";

@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -51,11 +52,18 @@ public class ArduinoActivity extends ActionBarActivity implements View.OnClickLi
     private ToggleButton light;
     private GEM item;
     private int position;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arduino);
+
+        actionBar = getSupportActionBar();
+        actionBar.setLogo(R.mipmap.logo);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(true);
 
         position = getIntent().getIntExtra(MyFridgeActivity.GEM_ITEM_POSITION, 0);
         item = (GEM) getIntent().getSerializableExtra(MyFridgeActivity.GEM_ITEM);

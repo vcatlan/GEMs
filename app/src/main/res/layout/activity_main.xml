@@ -1,106 +1,58 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@mipmap/home_screen_background"
+    android:id="@+id/main_menu">
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/myfridgeButtonlabel"
+        android:layout_width="285dp"
+        android:layout_height="95dp"
         android:id="@+id/myFridgeButton"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="52dp"
+        android:visibility="visible"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tipsButtonLabel"
+        android:layout_width="285dp"
+        android:layout_height="100dp"
         android:id="@+id/tipsButton"
-        android:layout_marginTop="30dp"
+        android:visibility="visible"
         android:layout_below="@+id/myFridgeButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:background="@android:color/transparent" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/gameButtonLabel"
+        android:layout_width="285dp"
+        android:layout_height="95dp"
         android:id="@+id/gameButton"
+        android:layout_marginTop="10dp"
+        android:visibility="visible"
         android:layout_below="@+id/tipsButton"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp" />
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+    <Button
+        android:layout_width="135dp"
+        android:layout_height="105dp"
+        android:id="@+id/settingsButton"
+        android:layout_below="@+id/gameButton"
+        android:layout_alignRight="@+id/gameButton"
+        android:layout_alignEnd="@+id/gameButton"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent" />
+
+    <Button
+        android:layout_width="142dp"
+        android:layout_height="105dp"
+        android:id="@+id/demoButton"
         android:layout_below="@+id/gameButton"
         android:layout_alignLeft="@+id/gameButton"
         android:layout_alignStart="@+id/gameButton"
-        android:layout_marginTop="30dp">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/settingsButtonLabel"
-            android:id="@+id/settingsButton"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/demoButtonLabel"
-            android:id="@+id/demoButton"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/imageView"
-        android:src="@mipmap/logo3"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Name:"
-        android:id="@+id/userNameTextView"
-        android:layout_alignTop="@+id/imageView"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Email:"
-        android:id="@+id/userEmailTextView"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/userNameTextView"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_marginLeft="20dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Points:"
-        android:id="@+id/userPointsTextView"
-        android:layout_below="@+id/userEmailTextView"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp" />
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent" />
 
 </RelativeLayout>

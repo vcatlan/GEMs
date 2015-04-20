@@ -8,10 +8,12 @@
         android:layout_width="50dp"
         android:layout_height="52dp"
         android:id="@+id/itemColorImageView"
-        android:src="@mipmap/logo3"
+        android:src="@mipmap/logo"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:cropToPadding="false"
+        android:padding="-10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,10 +33,11 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/itemTimeTextView"
-        android:text="@string/defaultLabel"
-        android:layout_alignTop="@+id/itemNameTextView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:text="0"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/textViewDaysOld"
+        android:layout_alignEnd="@+id/textViewDaysOld"
+        android:layout_marginRight="23dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,5 +47,16 @@
         android:id="@+id/itemMacAddressTextView"
         android:layout_below="@+id/itemNameTextView"
         android:layout_alignLeft="@+id/itemNameTextView"
-        android:layout_alignStart="@+id/itemNameTextView" />
+        android:layout_alignStart="@+id/itemNameTextView"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Days Old"
+        android:id="@+id/textViewDaysOld"
+        android:layout_below="@+id/itemTimeTextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

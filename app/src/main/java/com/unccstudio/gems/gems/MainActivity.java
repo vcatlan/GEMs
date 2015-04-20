@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,11 +25,18 @@ public class MainActivity extends ActionBarActivity {
     private Button myFridge, tips, game, settings, demo;
     private String TAG = "MainActivity";
     private TextView voiceText;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        actionBar = getSupportActionBar();
+        actionBar.setLogo(R.mipmap.logo);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(true);
 
         myFridge = (Button) findViewById(R.id.myFridgeButton);
         tips = (Button) findViewById(R.id.tipsButton);
@@ -46,23 +54,23 @@ public class MainActivity extends ActionBarActivity {
 
 //        voiceText = (TextView) findViewById(R.id.voiceTextView);
 //
-        findViewById(R.id.settingsButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
-
-                try {
-                    startActivityForResult(intent, SPEECH_REQUEST_CODE);
-                } catch (ActivityNotFoundException a) {
-                    Toast t = Toast.makeText(getApplicationContext(),
-                            "Opps! Your device doesn't support Speech to Text",
-                            Toast.LENGTH_SHORT);
-                    t.show();
-                }
-            }
-        });
+//        findViewById(R.id.settingsButton).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+//
+//                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
+//
+//                try {
+//                    startActivityForResult(intent, SPEECH_REQUEST_CODE);
+//                } catch (ActivityNotFoundException a) {
+//                    Toast t = Toast.makeText(getApplicationContext(),
+//                            "Opps! Your device doesn't support Speech to Text",
+//                            Toast.LENGTH_SHORT);
+//                    t.show();
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -106,14 +114,14 @@ public class MainActivity extends ActionBarActivity {
                 getSupportActionBar().setSubtitle("Bluetooth not enabled");
             }
         }
-        else if (requestCode == SPEECH_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                ArrayList<String> text = data
-                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
-                voiceText.setText(text.get(0));
-            }
-        }
+//        else if (requestCode == SPEECH_REQUEST_CODE) {
+//            if (resultCode == Activity.RESULT_OK) {
+//                ArrayList<String> text = data
+//                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+//
+//                voiceText.setText(text.get(0));
+//            }
+//        }
 
     }
 
