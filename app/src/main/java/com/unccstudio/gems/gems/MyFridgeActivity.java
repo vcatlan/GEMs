@@ -33,7 +33,7 @@ public class MyFridgeActivity extends ActionBarActivity {
     private BluetoothAdapter mBlueAdapter = null;
     private Set<BluetoothDevice> pairedDevices;
     private ListView itemListView;
-    private String[] itemNames = new String[3];
+    private String[] itemNames = new String[8];
     private int counter;
     private ActionBar actionBar;
 
@@ -51,7 +51,12 @@ public class MyFridgeActivity extends ActionBarActivity {
         counter = 0;
         itemNames[0] = "Milk";
         itemNames[1] = "Tomato";
-        itemNames[2] = "Leftover";
+        itemNames[2] = "Steak";
+        itemNames[3] = "Avocado";
+        itemNames[4] = "Leftovers";
+        itemNames[5] = "Chicken";
+        itemNames[6] = "Strawberries";
+        itemNames[7] = "Eggs";
 
         items = new ArrayList<>();
         itemListView = (ListView) findViewById(R.id.myFridgeListView);
@@ -73,7 +78,7 @@ public class MyFridgeActivity extends ActionBarActivity {
 
                     item.setMacAddress(device.getAddress());
                     item.setName(itemNames[counter]);
-                    item.setAge(2+counter);
+                    item.setAge(6);
                     item.setAttached(true);
                     item.setShelfLife(5+counter);
                     item.setShelfLifeType("days");
@@ -85,6 +90,72 @@ public class MyFridgeActivity extends ActionBarActivity {
             }
         }
 
+        GEM anotherItem = new GEM();
+
+        anotherItem.setMacAddress("");
+        anotherItem.setName(itemNames[3]);
+        anotherItem.setAge(4);
+        anotherItem.setAttached(true);
+        anotherItem.setShelfLife(5+counter);
+        anotherItem.setShelfLifeType("days");
+        anotherItem.setQuantity(1);
+        counter++;
+
+        items.add(anotherItem);
+
+        anotherItem = new GEM();
+
+        anotherItem.setMacAddress("");
+        anotherItem.setName(itemNames[4]);
+        anotherItem.setAge(3);
+        anotherItem.setAttached(true);
+        anotherItem.setShelfLife(5+counter);
+        anotherItem.setShelfLifeType("days");
+        anotherItem.setQuantity(1);
+        counter++;
+
+        items.add(anotherItem);
+
+        anotherItem = new GEM();
+
+        anotherItem.setMacAddress("");
+        anotherItem.setName(itemNames[5]);
+        anotherItem.setAge(2);
+        anotherItem.setAttached(true);
+        anotherItem.setShelfLife(5+counter);
+        anotherItem.setShelfLifeType("days");
+        anotherItem.setQuantity(1);
+        counter++;
+
+        items.add(anotherItem);
+
+        anotherItem = new GEM();
+
+        anotherItem.setMacAddress("");
+        anotherItem.setName(itemNames[6]);
+        anotherItem.setAge(2);
+        anotherItem.setAttached(true);
+        anotherItem.setShelfLife(5+counter);
+        anotherItem.setShelfLifeType("days");
+        anotherItem.setQuantity(1);
+        counter++;
+
+        items.add(anotherItem);
+
+        anotherItem = new GEM();
+
+        anotherItem.setMacAddress("");
+        anotherItem.setName(itemNames[7]);
+        anotherItem.setAge(1);
+        anotherItem.setAttached(true);
+        anotherItem.setShelfLife(5+counter);
+        anotherItem.setShelfLifeType("days");
+        anotherItem.setQuantity(1);
+        counter++;
+
+        items.add(anotherItem);
+
+
         adapter = new MyFridgeDisplayItemAdapter(this, R.layout.display_myfridgeitem_layout, items);
         itemListView.setAdapter(adapter);
         adapter.setNotifyOnChange(true);
@@ -92,10 +163,15 @@ public class MyFridgeActivity extends ActionBarActivity {
         itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MyFridgeActivity.this, ArduinoActivity.class);
-                intent.putExtra(GEM_ITEM, items.get(position));
-                intent.putExtra(GEM_ITEM_POSITION, position);
-                startActivityForResult(intent, ARDUINO_ACTIVITY);
+                if(items.get(position).getMacAddress().equals("")) {
+
+                }
+                else {
+                    Intent intent = new Intent(MyFridgeActivity.this, ArduinoActivity.class);
+                    intent.putExtra(GEM_ITEM, items.get(position));
+                    intent.putExtra(GEM_ITEM_POSITION, position);
+                    startActivityForResult(intent, ARDUINO_ACTIVITY);
+                }
             }
         });
 
