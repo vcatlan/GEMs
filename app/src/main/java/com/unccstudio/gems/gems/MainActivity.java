@@ -2,10 +2,8 @@ package com.unccstudio.gems.gems;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -15,9 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
+import com.google.android.gms.games.GameEntity;
 
 public class MainActivity extends ActionBarActivity {
     private static final int REQUEST_ENABLE_BT = 1001;
@@ -39,8 +35,8 @@ public class MainActivity extends ActionBarActivity {
         actionBar.setDisplayUseLogoEnabled(true);
 
         myFridge = (Button) findViewById(R.id.myFridgeButton);
-        tips = (Button) findViewById(R.id.tipsButton);
         game = (Button) findViewById(R.id.gameButton);
+        tips = (Button) findViewById(R.id.tipsButton);
         settings = (Button) findViewById(R.id.settingsButton);
         demo = (Button) findViewById(R.id.demoButton);
 
@@ -49,6 +45,36 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MyFridgeActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        tips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TipsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        game.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "TBA", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        demo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "TBA", Toast.LENGTH_SHORT).show();
             }
         });
 

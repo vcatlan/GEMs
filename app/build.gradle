@@ -33,4 +33,5 @@ dependencies {
     compile fileTree(include: 'Parse-*.jar', dir: 'libs')
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
     compile 'com.google.android.gms:play-services:7.0.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

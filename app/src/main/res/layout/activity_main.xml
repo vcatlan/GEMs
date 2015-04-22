@@ -18,7 +18,7 @@
     <Button
         android:layout_width="285dp"
         android:layout_height="100dp"
-        android:id="@+id/tipsButton"
+        android:id="@+id/gameButton"
         android:visibility="visible"
         android:layout_below="@+id/myFridgeButton"
         android:layout_centerHorizontal="true"
@@ -28,10 +28,10 @@
     <Button
         android:layout_width="285dp"
         android:layout_height="95dp"
-        android:id="@+id/gameButton"
+        android:id="@+id/tipsButton"
         android:layout_marginTop="10dp"
         android:visibility="visible"
-        android:layout_below="@+id/tipsButton"
+        android:layout_below="@+id/gameButton"
         android:layout_centerHorizontal="true"
         android:background="@android:color/transparent" />
 
@@ -39,9 +39,9 @@
         android:layout_width="135dp"
         android:layout_height="105dp"
         android:id="@+id/settingsButton"
-        android:layout_below="@+id/gameButton"
-        android:layout_alignRight="@+id/gameButton"
-        android:layout_alignEnd="@+id/gameButton"
+        android:layout_below="@+id/tipsButton"
+        android:layout_alignRight="@+id/tipsButton"
+        android:layout_alignEnd="@+id/tipsButton"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent" />
 
@@ -49,9 +49,9 @@
         android:layout_width="142dp"
         android:layout_height="105dp"
         android:id="@+id/demoButton"
-        android:layout_below="@+id/gameButton"
-        android:layout_alignLeft="@+id/gameButton"
-        android:layout_alignStart="@+id/gameButton"
+        android:layout_below="@+id/tipsButton"
+        android:layout_alignLeft="@+id/tipsButton"
+        android:layout_alignStart="@+id/tipsButton"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent" />
 
