@@ -74,7 +74,8 @@ public class MainActivity extends ActionBarActivity {
         demo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "TBA", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, DemoActivity.class);
+                startActivity(intent);
             }
         });
 

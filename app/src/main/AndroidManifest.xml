@@ -29,7 +29,6 @@
             android:label="@string/title_activity_arduino"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".MyFridgeActivity"
             android:label="@string/title_activity_my_fridge"
@@ -49,6 +48,10 @@
             android:name=".GameActivity"
             android:label="@string/title_activity_game"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".DemoActivity"
+            android:label="@string/title_activity_demo" >
         </activity>
     </application>
 

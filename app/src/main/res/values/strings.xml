@@ -30,4 +30,5 @@
     <string name="saveButton">Save</string>
     <string name="title_activity_tips">Tips</string>
     <string name="title_activity_game">Game</string>
+    <string name="title_activity_demo">DemoActivity</string>
 </resources>
